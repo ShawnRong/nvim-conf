@@ -8,6 +8,11 @@ if not snip_status_ok then
   return
 end
 
+local lspkind_status_ok, lspkind = pcall(require, "lspkind")
+if not lspkind_status_ok then
+  return
+end
+
 require("luasnip.loaders.from_vscode").lazy_load()
 
 -- 下面会用到这个函数
@@ -28,7 +33,6 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-e>'] = cmp.mapping.abort(),  -- 取消补全，esc也可以退出
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -67,5 +71,19 @@ cmp.setup({
     { name = 'path' },
   }, {
     { name = 'buffer' },
-  })
+  }),
+  -- lspkind
+  formatting = {
+    format = function(entry, vim_item)
+      if vim.tbl_contains({ 'path' }, entry.source.name) then
+        local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
+        if icon then
+          vim_item.kind = icon
+          vim_item.kind_hl_group = hl_group
+          return vim_item
+        end
+      end
+      return lspkind.cmp_format({ with_text = true })(entry, vim_item)
+    end
+  }
 })

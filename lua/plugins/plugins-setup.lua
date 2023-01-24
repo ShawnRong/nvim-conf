@@ -20,9 +20,11 @@ vim.cmd([[
   augroup end
 ]])
 
+
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'folke/tokyonight.nvim' -- Theme
+  -- use 'ayu-theme/ayu-vim'
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
@@ -34,6 +36,7 @@ return require('packer').startup(function(use)
     },
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
+  use "nvim-tree/nvim-web-devicons" -- optional, for file icons
   use "christoomey/vim-tmux-navigator"
   use "nvim-treesitter/nvim-treesitter" -- Syntax highlight
   use "p00f/nvim-ts-rainbow" -- rainbow brackets
@@ -53,6 +56,12 @@ return require('packer').startup(function(use)
   use "rafamadriz/friendly-snippets"
   use "hrsh7th/cmp-path" -- 文件路径
 
+  use 'onsails/lspkind-nvim'
+  use({
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+  })
+
   use "numToStr/Comment.nvim" -- gcc和gc注释
   use "windwp/nvim-autopairs" -- 自动补全括号
 
@@ -63,6 +72,17 @@ return require('packer').startup(function(use)
     'nvim-telescope/telescope.nvim', tag = '0.1.1',  -- 文件检索
     requires = { {'nvim-lua/plenary.nvim'} }
   }
+
+  use 'simrat39/symbols-outline.nvim' -- code outline
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v2', -- optional but strongly recommended
+    config = function()
+      -- you can configure Hop the way you like here; see :h hop-config
+      require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+    end
+  }
+  use 'ethanholz/nvim-lastplace'
 
   if packer_bootstrap then
     require('packer').sync()
