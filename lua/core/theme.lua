@@ -1,4 +1,4 @@
-vim.cmd[[colorscheme tokyonight]]
+vim.cmd.colorscheme("tokyonight")
 
 require("tokyonight").setup({
   style = "night"

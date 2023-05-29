@@ -1,37 +1,42 @@
-local opt = vim.opt
+local set = vim.opt
 
 -- Line Number
-opt.number = true
-opt.relativenumber = true
+set.number = true
+set.relativenumber = true
 
 -- Indent
-opt.tabstop = 2
-opt.shiftwidth = 2
-opt.expandtab = true
-opt.autoindent = true
+set.tabstop = 2
+set.shiftwidth = 2
+set.expandtab = true
+set.autoindent = true
+
+-- Clipbaard
+-- Copy to system clipboard
+set.clipboard = "unnamed"
+-- Copy with highlight
+vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+	pattern = { "*" },
+	callback = function()
+		vim.highlight.on_yank({
+			timeout = 300,
+		})
+	end,
+})
+
 
 -- Warp
-opt.wrap = false
+set.wrap = false
 
 -- Cursor
-opt.cursorline = true
+set.cursorline = true
 
 -- Mouse
-opt.mouse:append("a")
-
--- Clipboard
-opt.clipboard:append("unnamedplus")
-
--- Default Split Window
-opt.splitright = true
-opt.splitbelow = true
+set.mouse:append("a")
 
 -- Search
-opt.ignorecase = true
-opt.smartcase = true
+set.ignorecase = true
+set.smartcase = true
 
 -- Layout
-opt.termguicolors = true
-opt.signcolumn = "yes"
-
-
+set.termguicolors = true
+set.signcolumn = "yes"
